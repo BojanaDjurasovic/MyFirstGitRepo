@@ -24,6 +24,8 @@ namespace Todos.Api
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
+                // neki moj komentar
+                int i = 0;
             });
     }
 }
