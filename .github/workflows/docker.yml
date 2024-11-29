@@ -7,6 +7,7 @@ on:
 
 env:
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+  SERVICE_ARN: "arn:aws:apprunner:eu-central-1:904233086989:service/todos-api/3f3d008e760a4aaf98fe548dc0fb5c9e"
 
 jobs:
   build-and-push:
@@ -46,3 +47,8 @@ jobs:
         run: |
           docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-central-1.amazonaws.com/todos-api:latest
           docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.eu-central-1.amazonaws.com/todos-api:${{ github.sha }}
+          
+      # Step 6: Deploy the application to AWS App Runner
+      - name: Deploy to AWS App Runner
+        run: |
+          aws apprunner start-deployment --service-arn ${{ env.SERVICE_ARN }}
